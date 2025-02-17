@@ -6,27 +6,29 @@ const button = document.querySelector(".start-button");
 const buttonReset = document.querySelector(".reset");
 
 let active = false;
+let active2 = false;
 let count = 0;
 let count2 = 0;
 let idInterval;
+let idInterval2;
 
-const animate = () => {
+const firstAnimate = () => {
   count++;
-  idInterval = requestAnimationFrame(animate);
+  idInterval = requestAnimationFrame(firstAnimate);
   if (count <= 50) {
     firstUnit.style.left = `${count}%`;
   } else {
     cancelAnimationFrame(idInterval);
   }
 };
-const secondAnimate = () => {
+const secondfirstAnimate = () => {
   count2++;
-  idInterval = requestAnimationFrame(secondAnimate);
+  idInterval2 = requestAnimationFrame(secondfirstAnimate);
   if (count2 <= 40) {
     text.style.fontSize = `${count2}px`;
     text.style.opacity = "1";
   } else {
-    cancelAnimationFrame(idInterval);
+    cancelAnimationFrame(idInterval2);
   }
 };
 
@@ -36,27 +38,30 @@ document.addEventListener("click", (event) => {
       cancelAnimationFrame(idInterval);
       active = false;
     } else {
-      idInterval = requestAnimationFrame(animate);
+      idInterval = requestAnimationFrame(firstAnimate);
       active = true;
     }
   }
 });
 
-button.addEventListener("click", (event) => {
-  if (active) {
-    idInterval = requestAnimationFrame(secondAnimate);
-    active = false;
+button.addEventListener("click", () => {
+  if (active2) {
+    cancelAnimationFrame(idInterval2);
+    active2 = false;
   } else {
-    cancelAnimationFrame(idInterval);
-    active = true;
+    idInterval2 = requestAnimationFrame(secondfirstAnimate);
+    active2 = true;
   }
 });
 
 buttonReset.addEventListener("click", () => {
   active = false;
+  active2 = false;
+
   count = 0;
   count2 = 0;
   firstUnit.removeAttribute("style");
   text.removeAttribute("style");
   cancelAnimationFrame(idInterval);
+  cancelAnimationFrame(idInterval2);
 });
